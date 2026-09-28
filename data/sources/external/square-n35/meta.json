@@ -1,5 +1,5 @@
 {
- "ref": "Fable51 search campaign, September 2026: symmetry-reduced basin hopping (orbit parametrization, ruin-and-recreate, soft-min L-BFGS warm-up, trust-region SLP polish); tie system refined to 80 digits by damped Gauss-Newton; verified in exact rational arithmetic",
- "credit": "Fable 5.1 with Shengtong Zhang, September 2026",
- "note": "not symmetric, 64 tied minimal triangles; insertion ladder from the 34-point configuration (+1 point, asymmetric basin hopping)"
+  "ref": "Rob Gardiner, Heilbronn square configurations, September 2026; original starting configuration: https://math.tejstead.com/heilbronn/square/34/.",
+  "credit": "Rob Gardiner, September 2026",
+  "note": "Further optimisation of our n=35 construction derived from the published n=34 configuration credited to Fable 5.1 with Shengtong Zhang."
 }
