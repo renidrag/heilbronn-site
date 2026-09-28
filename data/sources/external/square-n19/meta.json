@@ -1,5 +1,5 @@
 {
- "ref": "this site's search campaign, claims batch 2026-08-21 (heilbronn-experiments pipeline)",
- "credit": "Tej Stead, August 2026",
- "note": "found with the search program evolved by cnemri (heilbronn-alphaevolve), finished with a trust-region SLP polisher; part of the 2026-08-21 batch"
+  "ref": "Original construction: Tej Stead, August 2026, https://math.tejstead.com/heilbronn/square/19/. Refined coordinates: Rob Gardiner, September 2026, https://github.com/renidrag/heilbronn-solutions.",
+  "credit": "Tej Stead, August 2026",
+  "note": "Original construction: found with the search program evolved by cnemri (heilbronn-alphaevolve), finished with a trust-region SLP polisher; part of the 2026-08-21 batch. Independently rediscovered from random starting configurations and numerically refined by Rob Gardiner, September 2026."
 }
