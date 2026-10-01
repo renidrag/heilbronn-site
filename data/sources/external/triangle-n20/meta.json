@@ -1,5 +1,5 @@
 {
- "ref": "Fable51 search campaign, September 2026: symmetry-reduced basin hopping (orbit parametrization, greedy ruin-and-recreate, soft-min warm-up, trust-region SLP) and insertion ladders from neighbouring records; tie system refined to 80 digits by damped Gauss-Newton; verified in exact rational arithmetic",
- "credit": "Fable 5.1 with Shengtong Zhang, September 2026",
- "note": "not symmetric; 34 tied minimal triangles"
+  "ref": "Rob Gardiner, Heilbronn triangle configurations, September 2026.",
+  "credit": "Rob Gardiner, September 2026",
+  "note": "Search from random starting configurations"
 }
