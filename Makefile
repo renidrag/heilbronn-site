@@ -1,6 +1,6 @@
 PY := .venv/bin/python
 
-.PHONY: build test serve serve-caddy deploy sync-sources clean check-submission
+.PHONY: build test serve sync-sources clean check-submission
 
 build:
 	$(PY) -m build
@@ -11,16 +11,6 @@ test:
 
 serve:
 	$(PY) -m http.server -d dist 8080
-
-# Production-identical serving: precompressed siblings + cache headers.
-serve-caddy:
-	docker run --rm \
-	  -v "$(PWD)/dist":/srv:ro \
-	  -v "$(PWD)/deploy/Caddyfile.local":/etc/caddy/Caddyfile:ro \
-	  -p 8081:8081 caddy:2-alpine
-
-deploy:
-	deploy/deploy.sh
 
 sync-sources:
 	$(PY) build/sync_sources.py

@@ -1,8 +1,9 @@
 # Continuous deploy, pull-based: every push to main builds the site and
 # uploads dist/ as a tarball on the rolling "site" release. The server polls
-# that release every 5 minutes (deploy/site-pull.sh via cron) and syncs it
-# into /srv/www/math — so a merged PR is live within ~10 minutes. No server
-# credentials exist on GitHub; the box only makes outbound HTTPS.
+# that release every 5 minutes (server/site-pull.sh in tejstead/tejstead.com,
+# run by cron) and syncs it into /srv/www/math, so a merged PR is live within
+# ~10 minutes. No server credentials exist on GitHub; the box only makes
+# outbound HTTPS.
 name: publish-site
 
 on:
@@ -107,5 +108,5 @@ jobs:
           git rev-parse HEAD > site.sha
           gh release view site >/dev/null 2>&1 || gh release create site \
             --prerelease --title "site build (rolling)" \
-            --notes "Latest build of main. Pulled by the server every 5 minutes — see deploy/site-pull.sh. Not a versioned release."
+            --notes "Latest build of main. Pulled by the server every 5 minutes — see server/site-pull.sh in tejstead/tejstead.com. Not a versioned release."
           gh release upload site site.tar.gz site.sha --clobber

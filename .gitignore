@@ -5,8 +5,7 @@ __pycache__/
 .DS_Store
 reconstruct/cache/
 
-# private: deploy target, correspondence drafts, pending claim bundles
-deploy/host.local
+# private: correspondence drafts, pending claim bundles
 reconstruct/outreach/
 reconstruct/claims-out/
 .pytest_cache/
