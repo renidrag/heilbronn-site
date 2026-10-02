@@ -1,10 +1,16 @@
-# Golden Verifier Fixtures
+# Golden verifier fixtures
 
-This directory contains a regression test corpus of point configurations alongside certified `verify_output.json` records. It is used by `tests/test_verify.py` and `tests/test_verifier_js.mjs` to ensure that the Python exact-rational verifier and the client-side JavaScript BigInt verifier produce identical results.
+Point configurations with their expected `verify_output.json`.
+`tests/test_verify.py` and `tests/test_verifier_js.mjs` run both verifiers
+over them, the exact-rational Python one and the BigInt one in the browser,
+and check that the outputs agree.
 
-## Provenance & Coverage
-- **Origin**: Most fixtures come from this site's own search campaigns and were verified by two independent exact verifiers at the time they were found. They span every container and a wide range of n.
-- **Superseded Candidates**: Most fixtures were later improved upon by a newer record; the `-live` directories are snapshots of submissions that were current when copied here. Retaining superseded candidates preserves test coverage over large tie sets and near-degenerate triangles that current records may not exercise.
+Most fixtures come from the site's own search runs and were checked by two
+independent exact verifiers when they were found. They cover all three
+regions and a wide range of n. Directories ending in `-live` are copies of
+submissions that were the current entry when copied. Most of the rest have
+since been beaten. They stay because they exercise large tie sets and
+near-degenerate triangles that the current records may not.
 
-## Build Isolation
-These fixtures exist exclusively for unit testing and CI verification. They are isolated from `data/sources/` and are not processed during the static site build or counted on the public leaderboard.
+Nothing here is read by the site build or shown on the leaderboard. It is
+separate from `data/sources/` and exists only for tests.

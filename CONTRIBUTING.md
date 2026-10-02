@@ -1,37 +1,34 @@
 # Contributing a configuration
 
-Found a better arrangement — or have the original coordinates for an entry
-this site only shows as a reconstruction? Submissions are plain pull
-requests, verified automatically in exact arithmetic.
+Submissions are ordinary pull requests. CI checks each one in exact
+rational arithmetic and posts the result on the PR. Anyone can submit,
+whether the coordinates came from a person, a solver, or an automated
+pipeline. The site's own search runs go through the same process.
 
-Contributions may come from human researchers, numerical solvers, or automated
-search pipelines. To ensure consistency and automated validation, all submissions
-follow a structured directory format and are verified by continuous integration
-in exact rational arithmetic before merging.
-
-**There is one submission lane**: `data/sources/external/`, for everyone,
-including this site's own search pipeline.
+All coordinate submissions go in `data/sources/external/`.
 
 ## What to add
 
-One directory per configuration — two required files, plus an optional
-third if you know the exact algebraic value. A single PR may contain any
-number of configuration directories; nothing else.
+Each configuration gets one directory with two required files and one
+optional file:
 
 ```
 data/sources/external/<variant>-nNN/
-├── coordinates.txt    required — the configuration
-├── meta.json          required — provenance, credit, page note
-└── exact.json         optional — the value's minimal polynomial
+├── coordinates.txt    required: the points
+├── meta.json          required: provenance, credit, page note
+└── exact.json         optional: minimal polynomial of the value
 ```
 
-`<variant>` is `square`, `triangle`, or `convex`; `NN` is the zero-padded
-point count (e.g. `triangle-n15`, `square-n07`). The number of points in
-`coordinates.txt` must equal `NN`.
+`<variant>` is `square`, `triangle`, or `convex`. `NN` is the point count,
+zero-padded: `triangle-n15`, `square-n07`. `coordinates.txt` must contain
+exactly `NN` points.
+
+A PR may add or change any number of these directories. It should not
+touch anything else.
 
 ### coordinates.txt
 
-One point per line, two decimal literals separated by whitespace. Lines
+One point per line, as two decimal numbers separated by whitespace. Lines
 starting with `#` are comments.
 
 ```
@@ -40,24 +37,30 @@ starting with `#` are comments.
 0.041156363310095543088824043693	0.041156363310095543088824043693
 ```
 
-- **Plain decimals only** — no exponents, no fractions, at most 6 integer
-  digits and 200 decimal places per literal. Literals are parsed as exact
-  rationals, so what you write is exactly what is verified.
-- **Frames.** `square`: 0 ≤ x, y ≤ 1. `triangle`: the unit right triangle
-  x ≥ 0, y ≥ 0, x + y ≤ 1 (values are reported normalized to a unit-area
-  triangle, i.e. doubled). `convex`: any coordinates — the domain is the
-  points' own convex hull, and the value is area-normalized.
-- **Feasibility is checked exactly.** A point at `0.9999999999…` with 200
-  digits is fine; a point at `1.0000000001` is not. When rounding interior
-  results, truncate toward zero (for the triangle this keeps x + y ≤ 1
-  exactly; for the square it keeps coordinates inside [0, 1]).
-- **Precision: 15 decimals minimum, 30 recommended.** Two reasons. Sources
-  are ranked by the exact value their literals achieve, so a 30-decimal
-  literal of a converged optimum beats a shorter one of the same
-  arrangement. And the page's tie structure is computed exactly within
-  1e-9 of the minimum: below ~12 decimals the intended ties collapse and
-  the figure shows fewer minimal triangles than your configuration really
-  has (the verifier warns when this is about to happen).
+Format rules:
+
+- Plain decimals only. No exponents or fractions, at most 6 digits before
+  the point and 200 after. Each number is read as an exact rational, so the
+  value that gets verified is exactly what you wrote.
+- The frame depends on the variant.
+  - `square`: 0 ≤ x, y ≤ 1.
+  - `triangle`: the right triangle x ≥ 0, y ≥ 0, x + y ≤ 1. The site
+    reports values for a unit-area triangle, so they are double the raw
+    minimum area.
+  - `convex`: any coordinates. The region is the convex hull of the points
+    and the value is normalized by its area.
+- Feasibility is checked exactly. `0.99999…` to 200 places is inside the
+  square; `1.0000000001` is not. When you round, truncate toward zero. That
+  keeps square coordinates inside [0, 1] and keeps x + y ≤ 1 in the
+  triangle.
+
+Use at least 15 decimal places; 30 is better. The site ranks sources by the
+exact value of the numbers as written, so 30 digits of a converged optimum
+beat 15 digits of the same arrangement. Ties are also detected exactly,
+within a relative 1e-9 of the minimum. With fewer than about 12 decimals,
+triangles that should tie fall outside that window and the figure shows
+fewer minimal triangles than the configuration really has. The checker
+warns when this is likely.
 
 ### meta.json
 
@@ -69,19 +72,20 @@ starting with `#` are comments.
 }
 ```
 
-`ref` is required; `credit` and `note` are optional but encouraged.
+`ref` is required (up to 300 characters). `credit` (up to 300) and `note`
+(up to 2000) are optional but help readers.
 
-- `credit` should be `"Human Name, Month YYYY"` — if your submission beats
-  the published record, this string becomes the entry's **Found by** line,
-  so use the person's name, not a bot or account name.
-- `note` is shown verbatim on the configuration's page provenance — write
-  it for readers (method, one sentence, no marketing).
+- Write `credit` as `"Human Name, Month YYYY"`. If the submission beats
+  the current record, this string becomes the **Found by** line on the
+  entry, so give a person's name rather than a bot or account name.
+- `note` appears verbatim in the provenance section of the configuration
+  page. One or two sentences on the method is usually right.
 
-### exact.json (optional — for exact values)
+### exact.json (optional)
 
-If you know the configuration's exact value, add its **minimal polynomial**
-as an integer coefficient list, constant term first, for the normalized
-value A the site reports:
+If you know the exact value, give its minimal polynomial as a list of
+integer coefficients, constant term first. The polynomial is for the
+normalized value A that the site reports.
 
 ```json
 {
@@ -89,70 +93,69 @@ value A the site reports:
 }
 ```
 
-(that example encodes 5250987A⁵ + 1609650A⁴ + 161469A³ + 5438A² − 13A − 4,
-the triangle n = 15 value). Coefficients too large for 64-bit tools may be
-written as strings. No expression syntax is accepted — coefficients only.
+This is the triangle n = 15 value:
+5250987A⁵ + 1609650A⁴ + 161469A³ + 5438A² − 13A − 4. Coefficients too large
+for 64-bit integers can be written as strings of digits. Expressions are
+not accepted.
 
-The checker confirms in exact arithmetic that the polynomial has a root
-within 1e-9 (relative) of the value implied by your coordinates —
-irreducibility/minimality is not machine-checked, so double-check it
-yourself before submitting. If your submission wins the entry, the
-polynomial is re-validated at build time and rendered on the page.
+The checker confirms, in exact arithmetic, that the polynomial has a root
+within a relative 1e-9 of the value your coordinates give. It does not
+check that the polynomial is irreducible, so verify that yourself. If your
+submission becomes the entry, the build checks the polynomial again and
+shows it on the page.
 
 ## What happens on the PR
 
-A workflow re-verifies every changed submission with the site's exact
-verifier — all C(n,3) triples in rational arithmetic — and comments on the
-PR with the exact value, tie structure, detected symmetry, and how it
-compares to the current canonical entry. Invalid submissions (infeasible,
-malformed, wrong point count, exact-value mismatch) fail the check; read
-the comment, fix, push again.
+A workflow runs the site's exact verifier on every changed directory,
+checking all C(n, 3) triangles in rational arithmetic. It then comments
+with the exact value, the tie structure, the detected symmetry, and a
+comparison against the current entry. The check fails if the file is
+malformed, a point is outside the region, the point count is wrong, or the
+polynomial does not match. Read the comment, fix the problem, and push to
+the same branch.
 
-Contributors listed in `.github/trusted-submitters.txt` skip review: their
-PRs merge automatically once verification and CI pass — but only when the
-PR touches nothing but `data/sources/external/` directories. Everyone
-else's submissions wait for the maintainer to click merge. Any change to
-code, templates, workflows, or curated data always requires review.
+The value rules:
 
-A submission that verifies but scores **below** the current value is still
-welcome when it has provenance value — for example an original author's
-arrangement for an entry we only have as a reconstruction. Say so in the
-`note`.
+- A new directory that verifies is accepted even if it scores below the
+  current entry. That is useful when, for example, you have the original
+  author's coordinates for an entry the site only has as a reconstruction.
+  Say so in the `note`.
+- A change to an existing directory must not lower that directory's value.
+  An equal value is fine (editing `meta.json`, adding digits, adding
+  `exact.json`). A lower one is refused and needs a reviewed PR.
 
-After merge, `build/ingest.py` picks the best source per entry by exact
-value, regenerates `data/canonical/`, and the site rebuilds and deploys
-automatically — your configuration is live within about ten minutes.
+Once the check passes and the PR is merged, the site picks the
+highest-valued source for each entry and rebuilds. Your configuration is
+live within about ten minutes.
 
-Merging never lowers an entry. The check compares your coordinates against
-`main` as it was when the check ran; if a better configuration lands in the
-same directory before your PR is merged, the build keeps the higher-valued
-coordinates (the committed canonical entry competes as a candidate of its
-own and the overwrite is flagged in the build log). Rebase and re-check if
-you believe you still improve on it.
+An entry's value never goes down on merge. The PR check compares against
+`main` as of when it ran. If something better lands before your PR merges,
+the build keeps the better coordinates and logs the conflict. Rebase and
+rerun the check if you think yours still wins.
 
 ## Checklist for automated agents
 
-1. One directory per configuration under `data/sources/external/`, named
-   `<variant>-nNN`; touch no other paths.
+1. Add one directory per configuration under `data/sources/external/`,
+   named `<variant>-nNN`. Do not touch any other path.
 2. `coordinates.txt`: exactly NN points, plain decimals, 30 decimal places,
-   truncated toward zero; verify feasibility in exact arithmetic before
+   truncated toward zero. Check feasibility in exact arithmetic before
    opening the PR.
-3. `meta.json`: `ref` (required), `credit` as `"Human Name, Month YYYY"`,
-   `note` one informative sentence.
-4. `exact.json` only if you have verified the polynomial yourself.
-5. Run the same check CI will run:
+3. `meta.json`: `ref` is required. `credit` is `"Human Name, Month YYYY"`.
+   `note` is one informative sentence.
+4. Include `exact.json` only if you have checked the polynomial yourself.
+5. Run the check CI will run:
    `python3 scripts/check_submission.py data/sources/external/<dir>`.
-6. After opening the PR, read the verification comment; on failure, fix and
-   push to the same branch.
+6. After opening the PR, read the verification comment. If it failed, fix
+   and push to the same branch.
 
 ## Notes, corrections, references
 
-Not everything needs coordinates. Corrections to credits, history, or notes
-are PRs against `data/curated/` (`overrides.json`, `changelog.json`,
-`references.json`) — see the existing entries for the shape. These are
-reviewed by hand rather than by the verifier.
+Corrections to credits, history, or notes don't need coordinates. Open a PR
+against `data/curated/` (`overrides.json`, `changelog.json`,
+`references.json`) following the shape of the existing entries. These are
+reviewed by hand.
 
-## Local check
+## Checking locally
 
 ```
 make check-submission DIRS=data/sources/external/<variant>-nNN

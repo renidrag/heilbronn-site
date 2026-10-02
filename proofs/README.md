@@ -1,15 +1,12 @@
 # Formal proofs
 
-Curated, source-only formalization snapshots live below `proofs/`. Projects
-prepared for the Palomar registry use the layout
-`proofs/palomar/<project-name>/`.
+Source-only snapshots of formalizations. Projects prepared for the Palomar
+registry go in `proofs/palomar/<project-name>/`.
 
-A Palomar submission is pinned by three things: this public repository, an
-exact 40-character Git commit SHA, and the repository-relative path to the
-project's `comparator.json`. That makes the reviewed source immutable and
-reproducible even when `main` later advances.
+A Palomar submission is pinned by three things: this repository, a full
+40-character commit SHA, and the path to the project's `comparator.json`.
+The reviewed source stays fixed even as `main` moves on.
 
-Only source, verifier metadata, and human-readable verification notes belong
-here. Lean build products and dependency caches such as `.lake/`, `.olean`,
-and `.ilean` files are intentionally excluded. The repository-root
-[MIT license](../LICENSE) applies to these projects.
+Only source, verifier metadata, and human-readable verification notes are
+kept here. Build output and caches (`.lake/`, `.olean`, `.ilean`) are left
+out. The repository's [MIT license](../LICENSE) covers these projects.

@@ -1,4 +1,4 @@
-# Vendored from the retired companion search repository
+# Vendored from the retired search repository
 
-- verify_exact.py: adapted from verifiers/verify_a.py (library form)
-- heil.py, refine.py, sym.py: copied unchanged from search/
+- `verify_exact.py`: library version of `verifiers/verify_a.py`
+- `heil.py`, `refine.py`, `sym.py`: unchanged copies from `search/`
