@@ -207,6 +207,9 @@ thead th { font-family: var(--sans); font-size: .78rem; text-transform: uppercas
 .values td a:hover { color: var(--accent); }
 .values tbody tr:hover td, .values tbody tr:hover th { background: var(--code-bg); }
 .values td a.proven::after { content: "▲"; font-size: .55em; color: var(--accent); margin-left: .3em; vertical-align: .35em; }
+.recent td { vertical-align: baseline; }
+.recent td:nth-child(-n+4) { white-space: nowrap; }
+.recent td.digits { font-size: .85rem; }
 .table-legend { color: var(--muted); font-size: .85rem; }
 .proven-mark { color: var(--accent); font-size: .7em; vertical-align: .2em; }
 .classes .swatch { display: inline-block; width: .9rem; height: .9rem; border-radius: 3px; background: var(--chip); }

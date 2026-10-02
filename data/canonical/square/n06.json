@@ -61,7 +61,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Vertically and horizontally symmetric"
+  "group": "D2",
+  "order": 4,
+  "approx": false,
+  "label": "2-fold dihedral symmetry",
+  "reported": "Vertically and horizontally symmetric"
  },
  "notes": [
   "One of an infinite family of solutions."

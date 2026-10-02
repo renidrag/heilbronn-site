@@ -102,7 +102,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "180° Rotationally symmetric"
+  "group": "C2",
+  "order": 2,
+  "approx": false,
+  "label": "180° Rotationally symmetric",
+  "reported": null
  },
  "notes": [],
  "changelog": [

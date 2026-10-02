@@ -77,7 +77,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "2-fold symmetry"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "2-fold symmetry"
  },
  "notes": [],
  "changelog": [],

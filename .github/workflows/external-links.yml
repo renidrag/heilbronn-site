@@ -1,0 +1,61 @@
+# Weekly check of every external link on the built site (references,
+# coordinate sources, papers). Not part of PR CI: other people's servers
+# are flaky, and a dead link is never the PR author's fault. Dead links
+# open (or update) one issue labelled "dead-links"; a clean run closes it.
+name: external-links
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # the records feed reads data/canonical history
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build the site
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt
+          .venv/bin/python -m build
+
+      - name: Check external links
+        id: links
+        run: |
+          if .venv/bin/python scripts/check_external_links.py --markdown report.md \
+               | tee -a "$GITHUB_STEP_SUMMARY"; then
+            echo "dead=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "dead=true" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash -o pipefail {0}
+
+      - name: Open or update the dead-links issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEAD: ${{ steps.links.outputs.dead }}
+        run: |
+          gh label create dead-links --color B60205 \
+            --description "External links that stopped resolving" 2>/dev/null || true
+          issue=$(gh issue list --label dead-links --state open --json number --jq '.[0].number')
+          if [ "$DEAD" = "true" ]; then
+            if [ -n "$issue" ]; then
+              gh issue edit "$issue" --body-file report.md
+            else
+              gh issue create --title "Dead external links" --label dead-links --body-file report.md
+            fi
+          elif [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "All external links resolve again."
+          fi

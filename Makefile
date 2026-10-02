@@ -1,6 +1,6 @@
 PY := .venv/bin/python
 
-.PHONY: build test serve sync-sources clean check-submission
+.PHONY: build test serve sync-sources clean check-submission check-links
 
 build:
 	$(PY) -m build
@@ -19,6 +19,10 @@ sync-sources:
 #   make check-submission DIRS=data/sources/external/square-n17
 check-submission:
 	python3 scripts/check_submission.py $(DIRS)
+
+# Every external link on the built site; run weekly in CI.
+check-links:
+	$(PY) scripts/check_external_links.py
 
 clean:
 	rm -rf dist

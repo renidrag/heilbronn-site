@@ -138,7 +138,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Not symmetric"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": null
  },
  "notes": [],
  "changelog": [],

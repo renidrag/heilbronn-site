@@ -53,7 +53,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Horizontally symmetric"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "Horizontally symmetric"
  },
  "notes": [
   "One of an infinite family of solutions."

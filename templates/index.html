@@ -19,6 +19,28 @@ and an in-browser <a href="{{ base }}/verifier/">rational arithmetic verifier</a
 {% endfor %}
 </div>
 
+{% if recent %}
+<h2>Recent records</h2>
+<div class="table-scroll">
+<table class="recent">
+  <thead><tr><th>date</th><th>entry</th><th>new value</th><th>gain</th><th>found by</th></tr></thead>
+  <tbody>
+  {% for r in recent %}
+    <tr>
+      <td class="cl-date">{{ r.date }}</td>
+      <td><a href="{{ base }}/{{ r.slug }}/{{ r.n }}/">{{ r.title }}, n = {{ r.n }}</a></td>
+      <td class="digits">{{ r.value }}</td>
+      <td>{{ r.gain }}</td>
+      <td>{{ r.credit or "" }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="table-legend">The ten most recent improvements. New records are also published as an
+<a href="{{ base }}/records.xml">Atom feed</a>.</p>
+{% endif %}
+
 <h2>Best known values</h2>
 <p class="table-legend">Truncated to 8 decimals; <span class="proven-mark">▲</span> marks
 entries proven optimal.</p>

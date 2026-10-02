@@ -67,7 +67,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "5-fold dihedral symmetry"
+  "group": "D5",
+  "order": 10,
+  "approx": false,
+  "label": "5-fold dihedral symmetry",
+  "reported": "5-fold dihedral symmetry"
  },
  "notes": [
   "The optimality proof is machine-checked in Lean 4: value, attainment, and uniqueness of the affinely regular pentagon up to relabeling and invertible affine maps. Registered in the Palomar registry (PALOMAR-2026-09-02-000012)."

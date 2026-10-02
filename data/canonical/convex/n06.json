@@ -64,7 +64,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "6-fold dihedral symmetry"
+  "group": "D6",
+  "order": 12,
+  "approx": false,
+  "label": "6-fold dihedral symmetry",
+  "reported": "6-fold dihedral symmetry"
  },
  "notes": [
   "The configuration is Cantrell's (2007); the value itself was settled in 1995 — Dress, Yang and Zeng proved that any six points in a convex body K span a triangle of area at most |K|/6, and that 1/6 is sharp."

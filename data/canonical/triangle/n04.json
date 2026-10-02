@@ -41,12 +41,16 @@
  "coordinates_source": {
   "kind": "exact-construction",
   "ref": "data/sources/exact/constructions.py",
-  "note": "vertices plus centroid; one of an infinite family",
+  "note": "vertices plus centroid",
   "basis": null
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Completely symmetric"
+  "group": "D3",
+  "order": 6,
+  "approx": false,
+  "label": "3-fold dihedral symmetry",
+  "reported": "Completely symmetric"
  },
  "notes": [],
  "changelog": [],

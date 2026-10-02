@@ -90,7 +90,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "No symmetry"
+  "group": "C1",
+  "order": 1,
+  "approx": false,
+  "label": "Not symmetric",
+  "reported": "No symmetry"
  },
  "notes": [],
  "changelog": [],

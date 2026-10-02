@@ -37,7 +37,7 @@ CONSTRUCTIONS = {
         "points": [["0", "0"], ["1", "0"], ["0", "1"],
                    ["0.333333333333333333333333333333",
                     "0.333333333333333333333333333333"]],
-        "note": "vertices plus centroid; one of an infinite family",
+        "note": "vertices plus centroid",
     },
     ("triangle", 8): {
         # Exact realization of the certified optimum (Sudermann-Merx 2026,

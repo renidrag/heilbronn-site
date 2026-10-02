@@ -149,7 +149,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "5-fold dihedral symmetry"
+  "group": "D5",
+  "order": 10,
+  "approx": false,
+  "label": "5-fold dihedral symmetry",
+  "reported": null
  },
  "notes": [],
  "changelog": [

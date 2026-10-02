@@ -82,7 +82,11 @@
  },
  "coordinates_reconstructed": true,
  "symmetry": {
-  "label": "Reflectional symmetry"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "Reflectional symmetry"
  },
  "notes": [],
  "changelog": [

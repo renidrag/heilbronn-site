@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}The Heilbronn Problem{% endblock %}</title>
 <meta name="description" content="{% block description %}The Heilbronn problem for squares, triangles and convex regions: best known configurations with exact coordinates, proofs, and an interactive viewer.{% endblock %}">
+{% if page_path %}
+<link rel="canonical" href="{{ site_origin }}{{ page_path }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Heilbronn Problem">
+<meta property="og:url" content="{{ site_origin }}{{ page_path }}">
+<meta property="og:title" content="{{ self.title() }}">
+<meta property="og:description" content="{{ self.description() }}">
+<meta property="og:image" content="{{ site_origin }}{{ og_image or base ~ '/og.png' }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+{% endif %}
+<link rel="alternate" type="application/atom+xml" title="New Heilbronn records" href="{{ base }}/records.xml">
 <link rel="stylesheet" href="{{ base }}/assets/{{ assets['site.css'] }}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,10 90,85 10,85' fill='%23e4572e'/%3E%3C/svg%3E">
 {% block head %}{% endblock %}

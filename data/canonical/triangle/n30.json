@@ -150,7 +150,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Fully symmetric"
+  "group": "C3",
+  "order": 3,
+  "approx": false,
+  "label": "120° Rotationally symmetric",
+  "reported": null
  },
  "notes": [],
  "changelog": [],

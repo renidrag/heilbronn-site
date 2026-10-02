@@ -98,7 +98,11 @@
  },
  "coordinates_reconstructed": true,
  "symmetry": {
-  "label": "120° Rotationally symmetric"
+  "group": "C3",
+  "order": 3,
+  "approx": false,
+  "label": "120° Rotationally symmetric",
+  "reported": "120° Rotationally symmetric"
  },
  "notes": [
   "The tight structure splits 12 + 3: twelve points form a mirror-symmetric frame carrying all 15 minimal triples — the exact critical point of its tie system, with coordinates algebraic of degree 5 — while the other three are floaters whose every triple stays ≥ 1.0178× the minimum.",

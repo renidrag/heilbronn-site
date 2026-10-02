@@ -457,7 +457,7 @@ def canonical_doc(variant, n, entry, cand, res, page_relation, override, changel
             "basis": cand.get("basis"),
         } if cand else None),
         "coordinates_reconstructed": bool(cand and cand["kind"] == "reconstructed"),
-        "symmetry": {"label": entry["symmetry"] if entry else None},
+        "symmetry": symmetry_record(variant, cand, entry, page_relation),
         "notes": entry["notes"] if entry else [],
         "changelog": changelog or [],
         "references": refs or [],
@@ -503,6 +503,29 @@ def canonical_doc(variant, n, entry, cand, res, page_relation, override, changel
         doc["value"]["exact_poly"] = dict(cand["exact_poly_prev"])
     finalize_exact(doc, res)
     return doc
+
+
+def symmetry_record(variant, cand, entry, page_relation):
+    """The symmetry group detected from the stored coordinates, plus the
+    ledger's own wording when it describes this configuration. A ledger
+    label is dropped once the coordinates beat the ledger's record: it
+    describes the superseded configuration (square n=20 was labelled 90°
+    rotational after Fable 5.1's D2 record replaced Shanley's C4 one)."""
+    from .derive import detect_symmetry, symmetry_label
+    reported = entry["symmetry"] if entry else None
+    if page_relation in ("IMPROVES", "NEW"):
+        reported = None
+    if cand is None:
+        return {"label": None, "reported": reported}
+    pts = [(float(x), float(y)) for x, y in cand["points"]]
+    sym = detect_symmetry(variant, pts)
+    return {
+        "group": sym["group"],
+        "order": sym["order"],
+        "approx": sym["approx"],
+        "label": symmetry_label(sym, variant),
+        "reported": reported,
+    }
 
 
 def finalize_exact(doc, res):

@@ -11,6 +11,8 @@ import jinja2
 
 from .derive import derive, symmetry_label
 from .families import generate as family_generate
+from .ogimage import write_card
+from .records_feed import atom, record_events
 from .svggen import family_svg, figure_svg
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -21,6 +23,7 @@ DIST = ROOT / "dist" / "heilbronn"
 VARIANTS = ("square", "triangle", "convex")
 NS = list(range(3, 37))  # union over variants; missing docs are skipped
 BASE = "/heilbronn"
+SITE_ORIGIN = "https://math.tejstead.com"
 
 META = {
     "square": {
@@ -125,6 +128,13 @@ def fmt_dec(dec, limit=18):
     return (dec[:limit] + "…") if len(dec) > limit else dec
 
 
+def card_value(doc):
+    """Value for a preview card: 8 decimals, with an ellipsis when cut."""
+    full = (doc["value"].get("exact_decimal") or doc["value"]["decimal"]).rstrip("0")
+    short = short_value(doc)
+    return short if len(full) <= len(short) else short + "…"
+
+
 def fixed8(doc):
     """Uniform 8-decimal rendering for the values table (truncated, which
     keeps every entry a valid lower bound)."""
@@ -193,7 +203,7 @@ def provenance_lines(doc, derived):
 
 
 def symmetry_text(doc, derived):
-    label = doc["symmetry"]["label"]
+    label = doc["symmetry"]["reported"]
     if derived is None:
         return f"Reported symmetry: {label}." if label else "Unknown."
     sym = derived["symmetry"]
@@ -266,6 +276,7 @@ def class_rows(derived):
 def render_all(env, docs, derived_map, assets):
     common = {
         "base": BASE,
+        "site_origin": SITE_ORIGIN,
         "assets": assets,
     }
 
@@ -310,6 +321,8 @@ def render_all(env, docs, derived_map, assets):
             cls, fig_caption = [], ""
         ctx = dict(common,
             section=v, slug=v, n=n,
+            page_path=f"{BASE}/{v}/{n}/",
+            og_image=f"{BASE}/{v}/{n}/og.png" if figure else f"{BASE}/{v}/og.png",
             variant_title=META[v]["short"],
             status=doc["status"],
             recon=recon_label(doc),
@@ -355,6 +368,9 @@ def render_all(env, docs, derived_map, assets):
         if figure:
             (out.parent / "figure.svg").write_text(
                 '<?xml version="1.0" encoding="UTF-8"?>\n' + figure)
+            write_card(out.parent / "og.png", figure, f"{META[v]['short']}, n = {n}",
+                       f"A = {card_value(doc)}",
+                       "proven optimal" if doc["status"] == "proven" else "best known")
         if fam_spec:
             (out.parent / "family.json").write_text(json.dumps({
                 "variant": v, "n": n,
@@ -414,7 +430,13 @@ def render_all(env, docs, derived_map, assets):
                 "credit_lines": credit_lines,
                 "symline": symline,
             })
-        ctx = dict(common, section=v, slug=v,
+        ns = [m for m in NS if (v, m) in docs]
+        write_card(DIST / v / "og.png", figure_svg(v, docs[(v, INDEX_THUMBS[v])]["points"],
+                                                   derived_map[(v, INDEX_THUMBS[v])]),
+                   META[v]["card_title"], f"n = {ns[0]} to {ns[-1]}",
+                   "best known configurations")
+        ctx = dict(common, section=v, slug=v, page_path=f"{BASE}/{v}/",
+                   og_image=f"{BASE}/{v}/og.png",
                    title=META[v]["title"], intro=META[v]["intro"],
                    intro_plain=META[v]["blurb"], entries=entries)
         out = DIST / v / "index.html"
@@ -440,7 +462,18 @@ def render_all(env, docs, derived_map, assets):
                 "proven": doc["status"] in ("proven", "trivial"),
             } if doc else None)
         value_rows.append({"n": n, "cells": cells})
-    ctx = dict(common, section="index", variants=variants_ctx, value_rows=value_rows)
+    write_card(DIST / "og.png", figure_svg("square", docs[("square", 16)]["points"],
+                                           derived_map[("square", 16)]),
+               "Record tables", "n = 3 to 36", "square · triangle · convex")
+    events = record_events()
+    (DIST / "records.xml").write_text(atom(events, SITE_ORIGIN, BASE))
+    recent = [{
+        "date": e["date"][:10], "slug": e["variant"], "n": e["n"],
+        "title": META[e["variant"]]["short"], "value": e["new"][:10],
+        "gain": f"+{float(e['gain']) * 100:.2f}%", "credit": e["credit"],
+    } for e in events[:10]]
+    ctx = dict(common, section="index", page_path=f"{BASE}/", variants=variants_ctx,
+               value_rows=value_rows, recent=recent)
     (DIST / "index.html").write_text(env.get_template("index.html").render(ctx))
 
 
@@ -557,30 +590,31 @@ are tracked on the <a href="/heilbronn/leaderboard/">leaderboard</a>.</p>
 
 def render_extra(env, assets, values_name):
     """Pages that need the values.json asset name (written by downloads)."""
-    common = {"base": BASE, "assets": assets}
+    common = {"base": BASE, "site_origin": SITE_ORIGIN, "assets": assets}
     from .charts import build_charts
     (DIST / "trends").mkdir(parents=True, exist_ok=True)
     (DIST / "trends" / "index.html").write_text(
         env.get_template("trends.html").render(
-            dict(common, section="trends", charts=build_charts(load_docs()))))
+            dict(common, section="trends", page_path=f"{BASE}/trends/",
+                 charts=build_charts(load_docs()))))
     bib = json.loads((ROOT / "data" / "curated" / "references.json").read_text())["bib"]
     (DIST / "methods").mkdir(parents=True, exist_ok=True)
     (DIST / "methods" / "index.html").write_text(
         env.get_template("methods.html").render(
-            dict(common, section="methods", body=METHODS_BODY, bib=list(bib.values()))))
+            dict(common, section="methods", page_path=f"{BASE}/methods/",
+                 body=METHODS_BODY, bib=list(bib.values()))))
     from .leaderboard import leaderboards
     (DIST / "leaderboard").mkdir(parents=True, exist_ok=True)
     (DIST / "leaderboard" / "index.html").write_text(
         env.get_template("leaderboard.html").render(
-            dict(common, section="leaderboard", boards=leaderboards(load_docs()))))
+            dict(common, section="leaderboard", page_path=f"{BASE}/leaderboard/",
+                 boards=leaderboards(load_docs()))))
     (DIST / "verifier").mkdir(parents=True, exist_ok=True)
     (DIST / "verifier" / "index.html").write_text(
         env.get_template("verifier.html").render(
-            dict(common, section="verifier", values_name=values_name)))
+            dict(common, section="verifier", page_path=f"{BASE}/verifier/",
+                 values_name=values_name)))
     write_sitemap_and_404(env, common)
-
-
-SITE_ORIGIN = "https://math.tejstead.com"
 
 
 def write_sitemap_and_404(env, common):

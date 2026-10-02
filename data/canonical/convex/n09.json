@@ -74,7 +74,11 @@
  },
  "coordinates_reconstructed": true,
  "symmetry": {
-  "label": "2-fold symmetry"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "2-fold symmetry"
  },
  "notes": [
   "David Cantrell's original mirror-symmetric coordinates (2007), tightened to 15 decimals; this site's earlier asymmetric re-derivation of the same optimum differed only at rounding level."

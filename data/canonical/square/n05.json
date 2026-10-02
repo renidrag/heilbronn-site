@@ -57,7 +57,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Symmetric about a diagonal"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "Symmetric about a diagonal"
  },
  "notes": [],
  "changelog": [],

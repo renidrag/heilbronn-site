@@ -64,7 +64,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Horizontally symmetric"
+  "group": "C1",
+  "order": 1,
+  "approx": false,
+  "label": "Not symmetric",
+  "reported": "Horizontally symmetric"
  },
  "notes": [
   "One of an infinite family of solutions."

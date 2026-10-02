@@ -158,7 +158,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Not symmetric"
+  "group": "C1",
+  "order": 1,
+  "approx": false,
+  "label": "Not symmetric",
+  "reported": null
  },
  "notes": [],
  "changelog": [],

@@ -77,7 +77,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "2-fold symmetry"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "2-fold symmetry"
  },
  "notes": [
   "The optimum is the unique real root of 2060x⁵ − 2332x⁴ + 1064x³ − 240x² + 26x − 1; the optimizer — a reflection-symmetric heptagon with one interior point — is unique up to relabeling and invertible affine maps. Machine-checked in Lean 4 and registered in the Palomar registry (PALOMAR-2026-09-02-000012).",

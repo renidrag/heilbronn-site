@@ -109,7 +109,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "90° Rotationally symmetric"
+  "group": "D2",
+  "order": 4,
+  "approx": false,
+  "label": "2-fold dihedral symmetry",
+  "reported": null
  },
  "notes": [],
  "changelog": [

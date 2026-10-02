@@ -19,6 +19,9 @@ open a pull request; [CONTRIBUTING.md](CONTRIBUTING.md) has the format. CI
 verifies the coordinates in exact arithmetic and the entry goes live a few
 minutes after merge.
 
+New records are announced in an Atom feed,
+<https://math.tejstead.com/heilbronn/records.xml>.
+
 ## Layout
 
 | Path | Contents |

@@ -110,7 +110,11 @@
  },
  "coordinates_reconstructed": true,
  "symmetry": {
-  "label": "Fully symmetric"
+  "group": "D3",
+  "order": 6,
+  "approx": false,
+  "label": "3-fold dihedral symmetry",
+  "reported": "Fully symmetric"
  },
  "notes": [],
  "changelog": [

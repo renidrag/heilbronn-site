@@ -111,7 +111,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "6-fold dihedral symmetry"
+  "group": "D6",
+  "order": 12,
+  "approx": false,
+  "label": "6-fold dihedral symmetry",
+  "reported": "6-fold dihedral symmetry"
  },
  "notes": [],
  "changelog": [],

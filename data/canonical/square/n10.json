@@ -78,7 +78,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Symmetric about both diagonals"
+  "group": "D2",
+  "order": 4,
+  "approx": false,
+  "label": "2-fold dihedral symmetry",
+  "reported": "Symmetric about both diagonals"
  },
  "notes": [],
  "changelog": [

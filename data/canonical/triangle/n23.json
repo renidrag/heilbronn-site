@@ -122,7 +122,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Mirror symmetric"
+  "group": "D1",
+  "order": 2,
+  "approx": false,
+  "label": "Mirror symmetric",
+  "reported": "Mirror symmetric"
  },
  "notes": [],
  "changelog": [],

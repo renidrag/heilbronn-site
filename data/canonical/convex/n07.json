@@ -65,7 +65,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "3-fold dihedral symmetry"
+  "group": "C3",
+  "order": 3,
+  "approx": false,
+  "label": "120° Rotationally symmetric",
+  "reported": "3-fold dihedral symmetry"
  },
  "notes": [
   "Derived exactly on this site: the optimal configurations form a one-parameter family — the center plus two equilateral-triangle orbits 30° apart, radius ratio s anywhere in [√3/2, 2/√3], every member achieving exactly 1/9. Shown: the s = 2/√3 endpoint member (9 minimal triangles), matching the published figure.",

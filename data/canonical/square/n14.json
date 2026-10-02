@@ -94,7 +94,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Vertically and horizontally symmetric"
+  "group": "D2",
+  "order": 4,
+  "approx": false,
+  "label": "2-fold dihedral symmetry",
+  "reported": "Vertically and horizontally symmetric"
  },
  "notes": [
   "Exact value and coordinates computed by <strong>Rhys Chappell</strong>, August 2026 — an exact algebraic realization of Beyleveld's configuration (coordinates in Q(a), 8a³ − 12a² − 12a + 1 = 0), re-verified here."

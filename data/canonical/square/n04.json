@@ -46,7 +46,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Completely symmetric"
+  "group": "D4",
+  "order": 8,
+  "approx": false,
+  "label": "4-fold dihedral symmetry",
+  "reported": "Completely symmetric"
  },
  "notes": [],
  "changelog": [],

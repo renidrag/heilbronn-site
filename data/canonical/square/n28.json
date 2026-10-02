@@ -141,7 +141,11 @@
  },
  "coordinates_reconstructed": false,
  "symmetry": {
-  "label": "Completely symmetric"
+  "group": "C4",
+  "order": 4,
+  "approx": false,
+  "label": "90° Rotationally symmetric",
+  "reported": null
  },
  "notes": [],
  "changelog": [
